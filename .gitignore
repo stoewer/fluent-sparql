@@ -1,3 +1,11 @@
+# IDEA
+.idea/
+*.iml
+
+# log files
+*.log
+
+# maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -6,3 +14,4 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
+
