@@ -1,0 +1,15 @@
+language: java
+
+branches:
+  only:
+  - master
+
+jdk:
+  - oraclejdk8
+
+after_success:
+  - mvn clean test jacoco:report coveralls:jacoco
+
+notifications:
+  email:
+    on_failure: always
