@@ -27,6 +27,7 @@
     foaf:givenname "Frodo" ;
     foaf:family_name "Baggins" ;
     foaf:age "50"^^xsd:integer ;
+    foaf:nick "Tiny Hobbit" ;
     foaf:currentProject <save_middle_earth> ;
     foaf:knows <sam> ;
     foaf:knows <gandalf> .
