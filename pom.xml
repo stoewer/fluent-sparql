@@ -79,7 +79,7 @@
                     <aggregate>true</aggregate>
                     <show>public</show>
                     <nohelp>true</nohelp>
-                    <excludePackageNames>org.g_node.sparql.impl.*:org.g_node.sparql.util.*</excludePackageNames>
+                    <excludePackageNames>org.g_node.sparql.impl:org.g_node.sparql.util</excludePackageNames>
                     <header>Fluent SPARQL, ${project.version}</header>
                     <footer>Fluent SPARQL, ${project.version}</footer>
                     <doctitle>Fluent SPARQL, ${project.version}</doctitle>
