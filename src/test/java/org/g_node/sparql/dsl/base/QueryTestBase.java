@@ -1,4 +1,4 @@
-package org.g_node.sparql.dsl;
+package org.g_node.sparql.dsl.base;
 
 import java.util.*;
 
@@ -13,29 +13,27 @@ import org.junit.*;
  */
 public class QueryTestBase {
 
-    public static final Map<String, String> prefixes;
-    public static final Model foafOnt;
+    private static final Map<String, String> prefixes;
+    private static final Model foafOnt;
 
     static {
         prefixes = new HashMap<>();
         prefixes.put("foaf", FOAF.NS);
 
         foafOnt = ModelFactory.createOntologyModel();
-        foafOnt.read(FOAF.getURI());
+        foafOnt.read(QueryTestBase.class.getResource("/foaf.rdf").toString());
     }
 
-    protected Model ring, ringInf;
+    protected Model lotr;
+    protected InfModel lotrInf;
     protected FluentSparql sparql;
 
     @Before
     public void setUp() {
-        Reasoner resoner = ReasonerRegistry.getOWLReasoner();
-        resoner.bindSchema(foafOnt);
+        lotr = ModelFactory.createDefaultModel();
+        lotr.read(QueryTestBase.class.getResource("/ring.ttl").toString());
 
-        ring = ModelFactory.createDefaultModel();
-        ring.read(getClass().getResource("/ring.ttl").toString());
-
-        ringInf = ModelFactory.createInfModel(resoner, foafOnt, ring);
+        lotrInf = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), foafOnt, lotr);
 
         sparql = new FluentSparql(prefixes, true);
     }

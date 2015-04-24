@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.vocabulary.FOAF;
 import com.hp.hpl.jena.vocabulary.RDF;
+import org.g_node.sparql.dsl.base.QueryTestBase;
 import org.junit.Test;
 
 public class SparqlQueryTest extends QueryTestBase {
@@ -13,6 +14,7 @@ public class SparqlQueryTest extends QueryTestBase {
     @Test
     public void testSimpleQuery() {
 
+        // get the family name of a person with given name 'Frodo'
         Var familyName = Var.alloc("familyName");
         Query q = sparql
                 .select(familyName)
@@ -21,9 +23,7 @@ public class SparqlQueryTest extends QueryTestBase {
                     .add("?a", FOAF.family_name, familyName)
                 .query();
 
-        Query q2 = QueryFactory.create("SELECT ?c WHERE { ?a ?b ?c . }");
-
-        try (QueryExecution exec = QueryExecutionFactory.create(q, ringInf)) {
+        try (QueryExecution exec = QueryExecutionFactory.create(q, lotrInf)) {
             ResultSet result = exec.execSelect();
 
             assertThat(result.hasNext()).isTrue();

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.fail;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.vocabulary.FOAF;
+import org.g_node.sparql.dsl.base.QueryTestBase;
 import org.junit.Test;
 
 /**
