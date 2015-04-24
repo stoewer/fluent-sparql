@@ -31,7 +31,7 @@ public class QueryTestBase {
     @Before
     public void setUp() {
         lotr = ModelFactory.createDefaultModel();
-        lotr.read(QueryTestBase.class.getResource("/ring.ttl").toString());
+        lotr.read(QueryTestBase.class.getResource("/lotr.ttl").toString());
 
         lotrInf = ModelFactory.createInfModel(ReasonerRegistry.getOWLReasoner(), foafOnt, lotr);
 

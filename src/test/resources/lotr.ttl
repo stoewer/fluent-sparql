@@ -1,0 +1,59 @@
+@base <http://example.com/ring/> .
+
+@prefix  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix  owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix  rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix  xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix  foaf: <http://xmlns.com/foaf/0.1/> .
+
+
+<fellowship_of_the_ring>
+    a foaf:Group ;
+    foaf:name "Fellowship of the Ring" ;
+    foaf:member <frodo> ;
+    foaf:member <gandalf> ;
+    foaf:member <sam> .
+
+<save_middle_earth>
+    a foaf:Project ;
+    foaf:name "Save middle-earth" .
+
+<cool_tower>
+    a foaf:Project ;
+    foaf:name "Cool tower" .
+
+<frodo>
+    a foaf:Person ;
+    foaf:givenname "Frodo" ;
+    foaf:family_name "Baggins" ;
+    foaf:age "50"^^xsd:integer ;
+    foaf:currentProject <save_middle_earth> ;
+    foaf:knows <sam> ;
+    foaf:knows <gandalf> .
+
+<sam>
+    a foaf:Person ;
+    foaf:givenname "Samwise" ;
+    foaf:family_name "Gamgee" ;
+    foaf:nick "Sam" ;
+    foaf:age "38"^^xsd:integer ;
+    foaf:knows <gandalf> ;
+    foaf:knows <frodo> .
+
+<gandalf>
+    a foaf:Person ;
+    foaf:givenname "Gandalf" ;
+    foaf:nick "Gandalf the Grey" ;
+    foaf:knows <sam> ;
+    foaf:knows <saruman> ;
+    foaf:knows <frodo> .
+
+<saruman>
+    a foaf:Person ;
+    foaf:givenname "Saruman" ;
+    foaf:currentProject <cool_tower> ;
+    foaf:nick "Saruman the White" ;
+    foaf:knows <gandalf> .
+
+
+
