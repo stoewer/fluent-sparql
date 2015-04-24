@@ -1,5 +1,6 @@
 package org.g_node.sparql;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.hp.hpl.jena.query.Query;
@@ -15,7 +16,7 @@ public class FluentSparql implements PrologueHandler {
 
     public static final FluentSparql sparql = new FluentSparql(true);
 
-    private PrefixMapping prefixMapping;
+    private Map<String, String> prefixMapping;
 
     public FluentSparql() {
         this(false);
@@ -26,21 +27,25 @@ public class FluentSparql implements PrologueHandler {
     }
 
     public FluentSparql(PrefixMapping prefixMapping, boolean useStandardPrefixes) {
+        this(prefixMapping.getNsPrefixMap(), useStandardPrefixes);
+    }
+
+    public FluentSparql(Map<String, String> prefixMapping, boolean useStandardPrefixes) {
         this.prefixMapping = prefixMapping;
-        if (useStandardPrefixes) 
+        if (useStandardPrefixes)
             addStandardPrefixes();
     }
 
     public void addStandardPrefixes() {
         for (Entry<String, String> entry: PrefixMapping.Standard.getNsPrefixMap().entrySet())
-            this.prefixMapping.setNsPrefix(entry.getKey(), entry.getValue());
+            this.prefixMapping.put(entry.getKey(), entry.getValue());
     }
 
     @Override
     public PrologueHandler prefix(String name, String uri) {
         Query query = new Query();
 
-        query.setPrefixMapping(prefixMapping);
+        query.getPrefixMapping().setNsPrefixes(prefixMapping);
         query.setPrefix(name, uri);
 
         ElementGroup element = new ElementGroup();
@@ -53,7 +58,7 @@ public class FluentSparql implements PrologueHandler {
     public PrologueHandler prefix(String uri) {
         Query query = new Query();
 
-        query.setPrefixMapping(prefixMapping);
+        query.getPrefixMapping().setNsPrefixes(prefixMapping);
         query.setPrefix(":", uri);
 
         ElementGroup element = new ElementGroup();
@@ -67,7 +72,7 @@ public class FluentSparql implements PrologueHandler {
         Query query = new Query();
 
         query.setQuerySelectType();
-        query.setPrefixMapping(prefixMapping);
+        query.getPrefixMapping().setNsPrefixes(prefixMapping);
 
         for (String var : variables)
             query.addResultVar(var);
@@ -82,7 +87,7 @@ public class FluentSparql implements PrologueHandler {
         Query query = new Query();
 
         query.setQuerySelectType();
-        query.setPrefixMapping(prefixMapping);
+        query.getPrefixMapping().setNsPrefixes(prefixMapping);
 
         for (Var var : variables)
             query.addResultVar(var);
