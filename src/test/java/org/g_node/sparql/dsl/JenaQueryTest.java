@@ -1,6 +1,7 @@
 package org.g_node.sparql.dsl;
 
-import com.hp.hpl.jena.graph.NodeFactory;
+import static org.assertj.core.api.Assertions.fail;
+
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.sparql.expr.*;
 import com.hp.hpl.jena.sparql.syntax.*;
@@ -8,7 +9,10 @@ import com.hp.hpl.jena.sparql.util.NodeFactoryExtra;
 import org.g_node.sparql.util.NodeHelper;
 import org.junit.*;
 
-
+/**
+ * Not a real test but rather some code that creates a query via
+ * Jena ARQ syntax classes.
+ */
 public class JenaQueryTest extends NodeHelper {
 
     private Query query;
@@ -25,45 +29,51 @@ public class JenaQueryTest extends NodeHelper {
 
     @Test
     public void testManualQuery() {
-        Query query = new Query();
 
-        query.setPrefix("foo", "http://foo.com#");
-        query.setPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
+        try {
+            Query query = new Query();
 
-        query.setQuerySelectType();
+            query.setPrefix("foo", "http://foo.com#");
+            query.setPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
 
-        query.addResultVar("a");
-        query.addResultVar("b");
+            query.setQuerySelectType();
 
-        Element topGroup = new ElementGroup();
-        ElementGroup currGroup = (ElementGroup) topGroup;
+            query.addResultVar("a");
+            query.addResultVar("b");
 
-        currGroup.addTriplePattern(mkTriple("?a", "foo:name", NodeFactoryExtra.floatToNode(7.0f)));
+            Element topGroup = new ElementGroup();
+            ElementGroup currGroup = (ElementGroup) topGroup;
 
-        ElementUnion tmpGroup = new ElementUnion();
-        tmpGroup.addElement(currGroup);
-        topGroup = tmpGroup;
+            currGroup.addTriplePattern(mkTriple("?a", "foo:name", NodeFactoryExtra.floatToNode(7.0f)));
 
-        currGroup = new ElementGroup();
+            ElementUnion tmpGroup = new ElementUnion();
+            tmpGroup.addElement(currGroup);
+            topGroup = tmpGroup;
 
-        currGroup.addTriplePattern(mkTriple("?a", "foo:name", NodeFactoryExtra.intToNode(6)));
+            currGroup = new ElementGroup();
 
-        ElementFilter filter = new ElementFilter(
-                new E_LessThan(
-                        NodeValue.makeNode(mkNode("?a")),
-                        NodeValue.makeNode(mkNode("4.8"))
-                )
-        );
-        currGroup.addElement(filter);
+            currGroup.addTriplePattern(mkTriple("?a", "foo:name", NodeFactoryExtra.intToNode(6)));
 
-        if (topGroup instanceof ElementGroup) {
-            ((ElementGroup) topGroup).addElement(currGroup);
-        } else if (topGroup instanceof ElementUnion) {
-            ((ElementUnion) topGroup).addElement(currGroup);
+            ElementFilter filter = new ElementFilter(
+                    new E_LessThan(
+                            NodeValue.makeNode(mkNode("?a")),
+                            NodeValue.makeNode(mkNode("4.8"))
+                    )
+            );
+            currGroup.addElement(filter);
+
+            if (topGroup instanceof ElementGroup) {
+                ((ElementGroup) topGroup).addElement(currGroup);
+            } else if (topGroup instanceof ElementUnion) {
+                ((ElementUnion) topGroup).addElement(currGroup);
+            }
+
+            query.setQueryPattern(topGroup);
+
+            //System.out.println(query.toString());
+        } catch (Exception e) {
+            fail(String.format("Unexpected exception: %s", e.getMessage()));
+            e.printStackTrace();
         }
-
-        query.setQueryPattern(topGroup);
-
-        System.out.println(query.toString());
     }
 }
