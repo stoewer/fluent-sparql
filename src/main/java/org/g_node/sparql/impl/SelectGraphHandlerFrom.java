@@ -24,7 +24,7 @@ public class SelectGraphHandlerFrom extends SelectGraphHandler implements GraphH
 
     @Override
     public GraphHandler<SelectResult> from(Model model) {
-        return new SelectGraphHandler(this);
+        return new SelectGraphHandler(getQuery(), model);
     }
 
 }

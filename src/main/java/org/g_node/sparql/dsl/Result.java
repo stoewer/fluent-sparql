@@ -5,6 +5,6 @@ import com.hp.hpl.jena.query.ResultSet;
 
 public interface Result {
 
-    ResultSet resultSet();
+    ResultSet result();
 
 }

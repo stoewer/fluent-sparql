@@ -86,6 +86,6 @@ public final class SelectGraphHandlerEnd extends SelectGraphHandler implements G
 
     @Override
     public SelectResult execute() {
-        return null;
+        return new SelectResult(getQuery(), getModel());
     }
 }

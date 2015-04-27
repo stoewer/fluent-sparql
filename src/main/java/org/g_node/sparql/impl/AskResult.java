@@ -11,7 +11,7 @@ public class AskResult implements Result {
     }
 
     @Override
-    public ResultSet resultSet() {
+    public ResultSet result() {
         return null;
     }
 }
